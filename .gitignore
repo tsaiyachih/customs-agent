@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+
+# macOS / 工具產物
+.DS_Store
+.Rhistory
+.claude/scheduled_tasks.lock
+
+# 逐票客戶資料與測試/開發過程的輸出物——data/raw/ 放的是真實客戶文件，
+# data/output/ 混雜真實客戶文件的衍生產物與可重新產生的測試輸出，
+# 兩者都不進版控。真實文件對外展示前本來就要求先去識別化（見 CLAUDE.md），
+# 進了 git history 就很難徹底清乾淨，保守起見整批排除。
+# 測試用的合成 fixture（fixtures/）不受影響，正常進版控。
+data/raw/
+data/output/
+
+# 從公開稅則書（財政部關務署）解析出來的衍生資料庫，10MB。
+# 不確定要不要把衍生資料放進 git history，保守起見先排除；
+# 需要時執行 build_tariff_db.py 即可在本機重建。
+.claude/skills/customs-check/data/tariff.db
+
+# fixtures/<案件>/ 底下手動跑過 run_case.py／checker.py／export_erp.py
+# 之後留下的執行產出——重新跑就有，不是「輸入」，跟 data/output/ 排除
+# 的理由一致（見上）。只有 PDF 原始文件跟 manual_supplements.json 這種
+# 真正的人工輸入才進版控。
+fixtures/*/*.json
+!fixtures/*/manual_supplements.json
+fixtures/*/*_checks.csv
+# export_erp.py 固定輸出到 <案件目錄>/<發票號>/{structured,review,staging,import}/
+# （見 README.md「輸出目錄結構」），對應到 fixtures/<案件>/<發票號>/ 這一層。
+fixtures/*/*/structured/
+fixtures/*/*/review/
+fixtures/*/*/staging/
+fixtures/*/*/import/
+fixtures/*/*/case_status.json

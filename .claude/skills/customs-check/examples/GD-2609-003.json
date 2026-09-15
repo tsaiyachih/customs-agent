@@ -1,0 +1,206 @@
+{
+  "source_files": [
+    "01_Commercial_Invoice_GD-2609-003.pdf",
+    "02_Packing_List_GD-2609-003.pdf",
+    "03_Bill_of_Lading_GD-2609-003.pdf"
+  ],
+  "extraction_method": "text_layer_rules",
+  "trade_direction": "import",
+  "parties": {
+    "seller_name": "GREEN DELTA FOODS CO., LTD.",
+    "buyer_name": "UNI-LEAVES TRADING LTD.",
+    "shipper_name": "GREEN DELTA FOODS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "notify_party_name": null
+  },
+  "invoice": {
+    "invoice_no": "GD-2609-003",
+    "date": "SEP. 07, 2026",
+    "origin": "VIET NAM",
+    "incoterm": "CIF",
+    "currency": "USD",
+    "freight": null,
+    "insurance": null,
+    "items": [
+      {
+        "line_no": 1,
+        "description": "COCONUT SAP CONCENTRATE",
+        "qty": 9000,
+        "unit": "KGS",
+        "unit_price": 1.9,
+        "amount": 17100.0,
+        "description_normalized": "COCONUT SAP CONCENTRATE",
+        "source_hs_code_raw": "200989",
+        "source_hs_code_normalized": "200989",
+        "source_hs_prefix": "200989",
+        "source_hs_origin": "invoice",
+        "extraction_method": "manual_visual_supplement",
+        "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+        "supplement_reason": "規則式解析器漏抓本列，視覺核對原文補齊"
+      },
+      {
+        "line_no": 2,
+        "description": "COCONUT MILK POWDER",
+        "qty": 1000,
+        "unit": "KGS",
+        "unit_price": 4.8,
+        "amount": 4800.0,
+        "description_normalized": "COCONUT MILK POWDER",
+        "source_hs_code_raw": "210690",
+        "source_hs_code_normalized": "210690",
+        "source_hs_prefix": "210690",
+        "source_hs_origin": "invoice",
+        "extraction_method": "manual_visual_supplement",
+        "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+        "supplement_reason": "規則式解析器漏抓本列，視覺核對原文補齊"
+      },
+      {
+        "line_no": 3,
+        "description": "DRIED COCONUT CHIPS",
+        "qty": 800.0,
+        "unit": "KGS",
+        "unit_price": 3.5,
+        "amount": 2800.0,
+        "description_normalized": "DRIED COCONUT CHIPS",
+        "source_hs_code_raw": "200819",
+        "source_hs_code_normalized": "200819",
+        "source_hs_prefix": "200819",
+        "source_hs_origin": "invoice"
+      },
+      {
+        "line_no": 4,
+        "description": "NATURAL COCONUT FLAVOR EXTRACT",
+        "qty": 4500.0,
+        "unit": "KGS",
+        "unit_price": 2.2,
+        "amount": 9900.0,
+        "description_normalized": "NATURAL COCONUT FLAVOR EXTRACT",
+        "source_hs_code_raw": null,
+        "source_hs_code_normalized": null,
+        "source_hs_prefix": null,
+        "source_hs_origin": null
+      },
+      {
+        "line_no": 5,
+        "description": "TAPIOCA STARCH",
+        "qty": 1000.0,
+        "unit": "KGS",
+        "unit_price": 0.75,
+        "amount": 750.0,
+        "description_normalized": "TAPIOCA STARCH",
+        "source_hs_code_raw": "110814",
+        "source_hs_code_normalized": "110814",
+        "source_hs_prefix": "110814",
+        "source_hs_origin": "invoice"
+      }
+    ],
+    "total_amount": 35350.0,
+    "_source_file": "01_Commercial_Invoice_GD-2609-003.pdf",
+    "_source_page": 1
+  },
+  "packing_list": {
+    "invoice_no": "GD-2609-003",
+    "date": "SEP. 07, 2026",
+    "declared_containers": null,
+    "declared_packages": 200,
+    "declared_net": 16300.0,
+    "declared_gross": 17560.0,
+    "shipping_mark": "N/M",
+    "containers": [
+      {
+        "cntr_no": "TGHU1234567",
+        "packages": 120,
+        "qty": null,
+        "unit": null,
+        "net_weight": 10000.0,
+        "gross_weight": 10770.0
+      },
+      {
+        "cntr_no": "FSCU7654321",
+        "packages": 80,
+        "qty": null,
+        "unit": null,
+        "net_weight": 6300.0,
+        "gross_weight": 6790.0
+      }
+    ],
+    "_source_file": "02_Packing_List_GD-2609-003.pdf",
+    "_source_page": 1
+  },
+  "transport_document": {
+    "doc_type": "BL",
+    "doc_no": "DEMO-VN-KAO-2609007",
+    "vessel": "EVER VISION",
+    "voyage": "097S",
+    "port_of_loading": "CAT LAI PORT, VIET NAM",
+    "port_of_discharge": "KAOHSIUNG, TAIWAN",
+    "total_packages": 200,
+    "gross_weight": null,
+    "containers": [
+      "FSCU7654321",
+      "TGHU1234567"
+    ],
+    "shipper_name": "GREEN DELTA FOODS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "_source_file": "03_Bill_of_Lading_GD-2609-003.pdf",
+    "_source_page": 1
+  },
+  "case_issues": [
+    {
+      "code": "MANUAL_VISUAL_SUPPLEMENT_APPLIED",
+      "severity": "REVIEW",
+      "file": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "detail": "2 個品項因規則式解析在版面重疊／浮水印干擾下未能取得對應欄位，已改由人工視覺方式讀取原文後合併（manual_visual_supplement）。數值取自原文件、非推測值，但仍需人工抽樣核對；這些品項的稅則號列一樣尚未歸列。"
+    }
+  ],
+  "source_trace": [
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "Invoice No.                        GD-2609-003",
+      "extraction_rule": "invoice_no_inline_label"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "Country of Origin                  VIET NAM",
+      "extraction_rule": "origin_inline_label"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "TOTAL                                                           1",
+      "extraction_rule": "invoice_total_footer_line"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "Vessel                                      Voyage                        Port of Load",
+      "extraction_rule": "vessel_voyage_line"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "GREEN DELTA FOODS CO., LTD.",
+      "extraction_rule": "first_non_noise_line_or_seller_label"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD.",
+      "extraction_rule": "buyer_label_line"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "GREEN DELTA FOODS CO., LTD.",
+      "extraction_rule": "bl_shipper_label"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-003.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD.",
+      "extraction_rule": "bl_consignee_label"
+    }
+  ]
+}
