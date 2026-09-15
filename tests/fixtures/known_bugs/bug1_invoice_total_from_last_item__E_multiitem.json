@@ -1,0 +1,165 @@
+{
+  "source_files": [
+    "bill_of_lading.pdf",
+    "commercial_invoice.pdf",
+    "packing_list.pdf"
+  ],
+  "extraction_method": "text_layer_rules",
+  "trade_direction": "import",
+  "parties": {
+    "seller_name": "MEKONG DELTA OILS CO., LTD.",
+    "buyer_name": "UNI-LEAVES TRADING LTD., Taipei, Taiwan",
+    "shipper_name": "MEKONG DELTA OILS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "notify_party_name": null
+  },
+  "invoice": {
+    "invoice_no": "MDO-2609-005",
+    "date": "SEP.10.2026",
+    "origin": "Vietnam",
+    "incoterm": "CIF",
+    "currency": "USD",
+    "freight": null,
+    "insurance": null,
+    "items": [
+      {
+        "line_no": 1,
+        "description": "SESAME OIL",
+        "qty": 2000.0,
+        "unit": "KGS",
+        "unit_price": 3.2,
+        "amount": 6400.0,
+        "description_normalized": "SESAME OIL",
+        "source_hs_code_raw": "151550",
+        "source_hs_code_normalized": "151550",
+        "source_hs_prefix": "151550",
+        "source_hs_origin": "invoice"
+      },
+      {
+        "line_no": 2,
+        "description": "PEANUT OIL",
+        "qty": 1500.0,
+        "unit": "KGS",
+        "unit_price": 2.8,
+        "amount": 4200.0,
+        "description_normalized": "PEANUT OIL",
+        "source_hs_code_raw": null,
+        "source_hs_code_normalized": null,
+        "source_hs_prefix": null,
+        "source_hs_origin": null
+      },
+      {
+        "line_no": 3,
+        "description": null,
+        "qty": 500.0,
+        "unit": "KGS",
+        "unit_price": 5.0,
+        "amount": 2500.0,
+        "description_normalized": null,
+        "source_hs_code_raw": "151620",
+        "source_hs_code_normalized": "151620",
+        "source_hs_prefix": "151620",
+        "source_hs_origin": "invoice"
+      }
+    ],
+    "total_amount": 2500.0,
+    "supplier_hs_code": "151550",
+    "_source_file": "commercial_invoice.pdf",
+    "_source_page": 1
+  },
+  "packing_list": {
+    "invoice_no": "MDO-2609-005",
+    "date": "SEP.10.2026",
+    "declared_containers": 1,
+    "declared_packages": 90,
+    "declared_net": 3900.0,
+    "declared_gross": 4200.0,
+    "shipping_mark": "N/M",
+    "containers": [
+      {
+        "cntr_no": "TCLU7788990",
+        "packages": 90,
+        "qty": 500.0,
+        "unit": "KGS",
+        "net_weight": 3900.0,
+        "gross_weight": 4200.0
+      }
+    ],
+    "_source_file": "packing_list.pdf",
+    "_source_page": 1
+  },
+  "transport_document": {
+    "doc_type": "BL",
+    "doc_no": "POLVN490312233",
+    "vessel": "PACIFIC STAR",
+    "voyage": "212N",
+    "port_of_loading": "CAT LAI PORT, VIET NAM",
+    "port_of_discharge": "KAOHSIUNG, TAIWAN",
+    "total_packages": 90,
+    "gross_weight": 4200.0,
+    "containers": [
+      "TCLU7788990"
+    ],
+    "shipper_name": "MEKONG DELTA OILS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "_source_file": "bill_of_lading.pdf",
+    "_source_page": 1
+  },
+  "case_issues": [],
+  "source_trace": [
+    {
+      "source_document": "commercial_invoice.pdf",
+      "source_page": 1,
+      "source_text": "INVOICE NO.: MDO-2609-005",
+      "extraction_rule": "invoice_no_inline_label"
+    },
+    {
+      "source_document": "commercial_invoice.pdf",
+      "source_page": 1,
+      "source_text": "Goods of origin: Vietnam   to     KAOHSIUNG, TAIWAN",
+      "extraction_rule": "origin_inline_label"
+    },
+    {
+      "source_document": "commercial_invoice.pdf",
+      "source_page": 1,
+      "source_text": "Total:                        4000   KGS                13,100.00",
+      "extraction_rule": "invoice_total_footer_line"
+    },
+    {
+      "source_document": "bill_of_lading.pdf",
+      "source_page": 1,
+      "source_text": "B/L NO.: POLVN490312233",
+      "extraction_rule": "transport_doc_no_inline_label"
+    },
+    {
+      "source_document": "bill_of_lading.pdf",
+      "source_page": 1,
+      "source_text": "Vessel : PACIFIC STAR V. 212N",
+      "extraction_rule": "vessel_voyage_line"
+    },
+    {
+      "source_document": "commercial_invoice.pdf",
+      "source_page": 1,
+      "source_text": "MEKONG DELTA OILS CO., LTD.",
+      "extraction_rule": "first_non_noise_line_or_seller_label"
+    },
+    {
+      "source_document": "commercial_invoice.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD., Taipei, Taiwan",
+      "extraction_rule": "buyer_label_line"
+    },
+    {
+      "source_document": "bill_of_lading.pdf",
+      "source_page": 1,
+      "source_text": "MEKONG DELTA OILS CO., LTD.",
+      "extraction_rule": "bl_shipper_label"
+    },
+    {
+      "source_document": "bill_of_lading.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD.",
+      "extraction_rule": "bl_consignee_label"
+    }
+  ]
+}

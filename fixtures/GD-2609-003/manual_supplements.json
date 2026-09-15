@@ -1,0 +1,28 @@
+{
+  "invoice": {
+    "items": [
+      {
+        "line_no": 1,
+        "description": "COCONUT SAP CONCENTRATE",
+        "qty": 9000,
+        "unit": "KGS",
+        "unit_price": 1.90,
+        "amount": 17100.00,
+        "source_hs_code_raw": "200989",
+        "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+        "supplement_reason": "規則式解析器漏抓本列，視覺核對原文補齊"
+      },
+      {
+        "line_no": 2,
+        "description": "COCONUT MILK POWDER",
+        "qty": 1000,
+        "unit": "KGS",
+        "unit_price": 4.80,
+        "amount": 4800.00,
+        "source_hs_code_raw": "210690",
+        "source_document": "01_Commercial_Invoice_GD-2609-003.pdf",
+        "supplement_reason": "規則式解析器漏抓本列，視覺核對原文補齊"
+      }
+    ]
+  }
+}

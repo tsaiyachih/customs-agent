@@ -1,0 +1,178 @@
+{
+  "source_files": [
+    "01_Commercial_Invoice_GD-2609-004.pdf",
+    "02_Packing_List_GD-2609-004.pdf",
+    "03_Bill_of_Lading_GD-2609-004.pdf"
+  ],
+  "extraction_method": "text_layer_rules",
+  "trade_direction": "import",
+  "parties": {
+    "seller_name": null,
+    "buyer_name": "UNI-LEAVES TRADING LTD.",
+    "shipper_name": "MEKONG HARVEST INGREDIENTS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "notify_party_name": null
+  },
+  "invoice": {
+    "invoice_no": "GD-2609-004",
+    "date": "SEP. 07, 2026",
+    "origin": "VIET NAM",
+    "incoterm": "CIF",
+    "currency": "USD",
+    "freight": null,
+    "insurance": null,
+    "items": [
+      {
+        "line_no": 1,
+        "description": "COCONUT CREAM POWDER",
+        "qty": 2000.0,
+        "unit": "KGS",
+        "unit_price": 4.2,
+        "amount": 8400.0,
+        "description_normalized": "COCONUT CREAM POWDER",
+        "source_hs_code_raw": "210690",
+        "source_hs_code_normalized": "210690",
+        "source_hs_prefix": "210690",
+        "source_hs_origin": "invoice"
+      },
+      {
+        "line_no": 2,
+        "description": "ROASTED CASHEW NUTS",
+        "qty": 1200.0,
+        "unit": "KGS",
+        "unit_price": 6.5,
+        "amount": 7800.0,
+        "description_normalized": "ROASTED CASHEW NUTS",
+        "source_hs_code_raw": "200819",
+        "source_hs_code_normalized": "200819",
+        "source_hs_prefix": "200819",
+        "source_hs_origin": "invoice"
+      },
+      {
+        "line_no": 3,
+        "description": "CASSAVA STARCH, FOOD GRADE",
+        "qty": 3000.0,
+        "unit": "KGS",
+        "unit_price": 0.82,
+        "amount": 2460.0,
+        "description_normalized": "CASSAVA STARCH, FOOD GRADE",
+        "source_hs_code_raw": "110814",
+        "source_hs_code_normalized": "110814",
+        "source_hs_prefix": "110814",
+        "source_hs_origin": "invoice"
+      },
+      {
+        "line_no": 4,
+        "description": "PANDAN FLAVORING EXTRACT",
+        "qty": 500.0,
+        "unit": "KGS",
+        "unit_price": 3.8,
+        "amount": 1900.0,
+        "description_normalized": "PANDAN FLAVORING EXTRACT",
+        "source_hs_code_raw": null,
+        "source_hs_code_normalized": null,
+        "source_hs_prefix": null,
+        "source_hs_origin": null
+      }
+    ],
+    "total_amount": 20560.0,
+    "_source_file": "01_Commercial_Invoice_GD-2609-004.pdf",
+    "_source_page": 1
+  },
+  "packing_list": {
+    "invoice_no": "GD-2609-004",
+    "date": "SEP. 07, 2026",
+    "declared_containers": null,
+    "declared_packages": 120,
+    "declared_net": 6700.0,
+    "declared_gross": 7280.0,
+    "shipping_mark": null,
+    "containers": [
+      {
+        "cntr_no": "TGHU7654321",
+        "packages": 120,
+        "qty": null,
+        "unit": null,
+        "net_weight": 6700.0,
+        "gross_weight": 7280.0
+      }
+    ],
+    "_source_file": "02_Packing_List_GD-2609-004.pdf",
+    "_source_page": 1
+  },
+  "transport_document": {
+    "doc_type": "BL",
+    "doc_no": "DEMO-VN-KAO-2609012",
+    "vessel": "E",
+    "voyage": "ER",
+    "port_of_loading": "CAT LAI PORT, VIET NAM",
+    "port_of_discharge": "KAOHSIUNG, TAIWAN",
+    "total_packages": 120,
+    "gross_weight": 7180.0,
+    "containers": [
+      "TGHU7654321"
+    ],
+    "shipper_name": "MEKONG HARVEST INGREDIENTS CO., LTD.",
+    "consignee_name": "UNI-LEAVES TRADING LTD.",
+    "_source_file": "03_Bill_of_Lading_GD-2609-004.pdf",
+    "_source_page": 1
+  },
+  "case_issues": [
+    {
+      "code": "PARTY_EXTRACTION_AMBIGUOUS",
+      "severity": "REVIEW",
+      "file": "01_Commercial_Invoice_GD-2609-004.pdf",
+      "detail": "頁面最上方一行不像公司抬頭（可能是雜訊或版面不同），seller_name 無法確定，留空待人工確認"
+    }
+  ],
+  "source_trace": [
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "Invoice No.           GD-2609-004",
+      "extraction_rule": "invoice_no_inline_label"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "Country of Origin     VIET NAM",
+      "extraction_rule": "origin_inline_label"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "TOTAL USD 20,560.00",
+      "extraction_rule": "invoice_total_footer_line"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "B/L No.                      DEMO-VN-KAO-2609012",
+      "extraction_rule": "transport_doc_no_inline_label"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "Vessel / Voyage              EVER GLORY / 118N",
+      "extraction_rule": "vessel_voyage_line"
+    },
+    {
+      "source_document": "01_Commercial_Invoice_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD.",
+      "extraction_rule": "buyer_label_line"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "MEKONG HARVEST INGREDIENTS CO., LTD.",
+      "extraction_rule": "bl_shipper_label"
+    },
+    {
+      "source_document": "03_Bill_of_Lading_GD-2609-004.pdf",
+      "source_page": 1,
+      "source_text": "UNI-LEAVES TRADING LTD.",
+      "extraction_rule": "bl_consignee_label"
+    }
+  ]
+}
