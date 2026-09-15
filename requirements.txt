@@ -1,0 +1,10 @@
+# 這個專案的核心程式（.claude/skills/customs-check/scripts/ 底下全部
+# 腳本）只用 Python 標準函式庫，沒有任何 pip 依賴——這是刻意的設計
+# 限制，不是漏寫。抽取用的 `pdftotext` 是外部命令列工具（來自
+# poppler-utils），不是 pip 套件，見 README.md「環境需求」一節安裝。
+#
+# 下面這一個套件只有 tests/make_fixtures.py（重新產生 fixtures/ 底下
+# 合成測試 PDF 用）需要。直接跑 tests/run_tests.py 或使用已經在
+# fixtures/ 裡的既有測試文件完全不需要安裝這個套件——只有想「重新
+# 產生」或「修改」測試用 PDF 時才需要。
+reportlab==5.0.1

@@ -9,6 +9,42 @@
 中繼格式，正式匯入前一定要人工審核，也一定要對應到客戶實際使用的 ERP
 匯入樣板或 API。
 
+## 環境需求與安裝
+
+- **Python 3.11+**。核心程式（`.claude/skills/customs-check/scripts/`
+  底下全部腳本）只用標準函式庫，`pip install` 不需要裝任何東西——見
+  `requirements.txt`（裡面唯一列的 `reportlab` 只有重新產生
+  `fixtures/` 底下合成測試 PDF 才需要，正常使用/跑測試都用不到）。
+- **poppler**（提供 `pdftotext` 這個外部命令列工具，抽取層靠它把 PDF
+  轉成文字）——這不是 pip 套件，`pip install` 裝不到，是系統層級的
+  套件，沒裝的話幾乎每支腳本一啟動就會找不到指令而失敗：
+  - macOS：`brew install poppler`
+  - Ubuntu／Debian：`sudo apt-get install poppler-utils`
+- **稅則資料庫（`tariff.db`）是選用的，不是必要的**——這是從財政部
+  關務署公告的《中華民國海關進口稅則輸出入貨品分類表合訂本》（上冊＋
+  下冊）PDF 解析出來的衍生資料庫，約 10MB，**刻意不進版控**（見
+  `.gitignore`），clone 下來的 repo 預設不會有這個檔案，也不會有那
+  兩份稅則 PDF。沒有它的情況下：
+  - 抽取、三單交叉核對（`extract.py`／`run_case.py`／`checker.py` 的
+    R0–R15）、`validate.py`、`extract_crosscheck.py`、ERP readiness
+    判斷（`export_erp.py`）**都正常運作**，不受影響。
+  - `checker.py` 的 R13／R16（稅則號列相關提醒）、`tariff_lookup.py`／
+    `tariff_candidates.py`（稅則候選查詢）會優雅跳過（`tariff_candidates.csv`
+    照樣產生，但每個品項的候選一律是空清單），不會讓其他功能跟著失敗。
+  - `tests/run_tests.py` 裡依賴 `tariff.db` 的斷言會印出略過訊息，
+    不算測試失敗。
+  - 要取得完整功能：自行下載上述兩份稅則 PDF（財政部關務署網站公告
+    的現行稅則合訂本），預設路徑放在
+    `~/Downloads/112年上冊final.pdf`／`~/Downloads/112年下冊final.pdf`
+    （也可以用 `--db`/位置參數指到別的路徑），執行：
+    ```bash
+    python3 .claude/skills/customs-check/scripts/build_tariff_db.py \
+        ~/Downloads/112年上冊final.pdf ~/Downloads/112年下冊final.pdf
+    ```
+    建置完會自動跑內建驗證，通過才會寫入
+    `.claude/skills/customs-check/data/tariff.db`；驗證沒過會保留在
+    暫存檔名供檢查，不會覆蓋已存在的舊資料庫。
+
 ## 完整 Workflow
 
 ```
