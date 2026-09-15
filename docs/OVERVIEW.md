@@ -263,6 +263,19 @@
 
 **不進版控的理由**：這些全部是「重跑腳本就能重新產生」的執行產出，跟 `data/output/` 的既有排除慣例一致；真正無法重建、需要保護的是**上游的人工輸入**（`manual_supplements.json`、`confirmed_ccc_code`、`freetext_resolutions` 這些寫在案件 JSON 裡的人工裁決紀錄）。
 
+**輸出目錄結構跟舊版設計不同的兩個地方**（刻意覆蓋，不是遺漏）：
+
+1. **`erp_import_ready.csv` 只有 `READY` 才產生。** 舊版刻意設計成
+   `REVIEW_REQUIRED`（無 FAIL、只是稅則等欄位待確認）也會產生匯入檔，
+   欄位留空讓 ERP 端接手補。這一版改成更保守的規則：只要案件還有任何
+   待人工確認的事項（不管是稅則、抽取疑義、還是其他 WARN），就不產生
+   號稱「可匯入」的檔案——`staging/` 底下的 `items.csv` 等檔案本來就會
+   照實產生，需要「目前手上有什麼」的人去那邊看，不需要一個介於兩者
+   之間、容易被誤讀成「可以匯」的檔案。
+2. **輸出目錄改成 `structured/review/staging/import` 四個子資料夾**，
+   取代舊版全部檔案放在同一層的扁平結構，讓「這份檔案是給人看的還是
+   給 ERP 用的、能不能正式匯入」一眼就看得出來。
+
 ### 測試相關產出
 
 | 路徑 | 說明 |
@@ -334,6 +347,44 @@
 | `EXTRACTION_CROSSCHECK_MISMATCH` | REVIEW | 規則式抽取值跟模型讀出的值不一樣（自由文字欄位） |
 | `VISION_ONLY_NEEDS_CONFIRM` | REVIEW | 規則式沒抓到、只有模型讀到（孤值） |
 | `VISION_ADVISORY` | INFO | 模型的自由觀察（疑似拼字錯誤等），不擋流程 |
+
+**`extract_crosscheck.py` 完整流程**——跟既有「失敗才補救」的視覺抽取
+路徑（`SKILL.md` 步驟 2：整份 PDF 無文字層、或品項加總對不上表尾總額
+才觸發，讀整份文件、補所有欄位）是**兩件不同的事，並存不衝突**：
+
+|  | 觸發時機 | 讀取範圍 | 目的 |
+|---|---|---|---|
+| 既有視覺抽取（`SKILL.md` 步驟 2）| 失敗才補救（無文字層／品項表疑似不完整）| 整份文件、補所有欄位 | 填補規則式完全抽不到/抽不全的空缺 |
+| 自由文字交叉比對（本節）| 每票都跑 | 只讀自由文字欄位 | 找出規則式「有抓到值、但可能抓錯」的自由文字欄位 |
+
+流程（三個檔案都放在案件目錄，跟 `manual_supplements.json` 同一層）：
+
+```
+run_case.py <案件目錄> <case.json>
+    │  （模型）讀原文的自由文字欄位，寫出 <案件目錄>/vision_freetext.json
+    │  schema：{"fields": {"<欄位路徑>": {"value": ..., "context": "...原文片段..."}},
+    │            "advisory_notes": [{"field": ..., "note": "疑似拼字錯誤等自由觀察"}]}
+    ▼
+extract_crosscheck.py compare <case.json> <案件目錄>/vision_freetext.json
+    │  逐欄位比對（純 Python，只判斷「相不相等」），三種 issue 併入
+    │  case_issues，完全一致的欄位安靜通過。同時寫出
+    │  <案件目錄>/crosscheck_review.csv（只有兩種 REVIEW code 才進清單，
+    │  人工填 resolution 欄）
+    ▼
+（人工核對原文，填 crosscheck_review.csv 的 resolution 欄；⚠️ 填寫期間
+ 跟裁決完成前都不要重跑 run_case.py，會整個重建案件 JSON 蓋掉裁決）
+    ▼
+extract_crosscheck.py resolve <case.json> <填好的清單.csv>
+    │  resolution 有值的每一列：寫回 case.json 對應欄位，method 標為
+    │  rule_confirmed／vision_confirmed／manual_visual_supplement（人工
+    │  核對原文後鍵入第三個值時用這個，沿用既有慣例，不另造新詞彙），
+    │  同時在 doc["freetext_resolutions"] 留一筆裁決紀錄；resolution
+    │  留空的列跳過，維持 REVIEW_REQUIRED
+    ▼
+export_erp.py ...
+    已裁決的欄位不再擋 readiness（逐欄位判斷，不是整份文件一次豁免：
+    三個欄位不一致、只裁決兩個，剩下那個繼續擋）
+```
 
 ### `extract.py`/`run_case.py` 自己的守門檢查：9 個 code
 
