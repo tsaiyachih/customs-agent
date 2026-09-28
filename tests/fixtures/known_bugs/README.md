@@ -7,18 +7,15 @@
 
 ## 為什麼沒有 commit hash
 
-這三個 bug 的修正**都不在 git 歷史裡**——本專案只有兩個 commit
-（`e06145e` 初始提交、`3119426` erp_import.csv 調整），而這三個修正是
-「HEAD（`3119426`）」跟「目前 working tree（尚未提交）」之間的**未提交
-差異**，用 `git diff HEAD -- .claude/skills/customs-check/scripts/extract.py`
-可以看到完整前後對照。也就是說：HEAD 版本的 `extract.py` 就是「bug 還在」
-的版本，可以直接用 `git show HEAD:<path>` 取出來執行，不需要 `git
-checkout` 切換分支（因此也沒有 detached HEAD 的風險）。
+這三個 bug 是在專案公開前的開發過程中修掉的，修正前的 `extract.py`
+**不在本 repo 公開的 git 歷史裡**，因此無法用 commit hash 指向「bug 還在」
+的版本。本目錄的 JSON 是當時用舊版程式實際跑出來的結果（見下方「重建
+方式」），每個 bug 底下也附上了舊版程式片段與實際跑出的錯誤值，作為
+紀錄。
 
 另外還找到第四個候選（發票原產地欄位貪婪比對，把 "to" 吃進國名——見
-`.claude/skills/customs-check/scripts/extract.py` 現有正則旁的註解，及
-使用者記憶檔 `tariff-lookup-stage1.md`），但這個修正連 HEAD 都沒有保留
-「錯誤版本」的原始碼（`git show HEAD:...` 取出來的已經是修好的版本），
+`.claude/skills/customs-check/scripts/extract.py` 現有正則旁的註解），
+但重建當時已經找不到保留「錯誤版本」的原始碼，
 沒有任何可執行的舊程式碼可以重跑重建，只有事後的文字描述——手動編一個
 「大概長這樣」的錯誤值不算重建，是編造，所以這次**沒有**把它算進三個
 bug 裡，也沒有幫它造測資。三個已經是這次能誠實重建出來的全部數量，
@@ -27,11 +24,13 @@ bug 裡，也沒有幫它造測資。三個已經是這次能誠實重建出來�
 ## 重建方式：一律用方式 B（實際執行舊版函式）
 
 三個 bug 都用同一種方式重建，好過用方式 C（手改欄位猜錯誤值）——因為
-舊版函式**還在**（`HEAD` 版本），可以對真實 PDF 的文字層實際跑一次，
-拿到当時真的會產出的錯誤值，不是用人腦推理正則行為去猜：
+重建當時舊版函式還在，可以對真實 PDF 的文字層實際跑一次，
+拿到當時真的會產出的錯誤值，不是用人腦推理正則行為去猜。
+以下為當時的做法紀錄（需要修正前的舊版 `extract.py`，本 repo 不包含，
+無法直接照跑）：
 
 ```bash
-git show HEAD:.claude/skills/customs-check/scripts/extract.py > /tmp/extract_old.py
+# /tmp/extract_old.py = 修正前的舊版 extract.py
 python3 -c "
 import importlib.util, subprocess
 spec = importlib.util.spec_from_file_location('extract_old', '/tmp/extract_old.py')
@@ -42,8 +41,8 @@ print(extract_old.parse_invoice(text))       # 或 parse_packing_list / parse_tr
 ```
 
 嚴格來說，舊版 `extract.py` 只支援單一合併 PDF（`run_case.py` 當時還不
-存在，是這批未提交修改裡新增的檔案），沒辦法直接對 `GD-2609-003`／
-`GD-2609-004` 這種多檔案案件目錄跑完整 CLI。因此实际做法是：直接呼叫
+存在，是與這三個修正同一批新增的檔案），沒辦法直接對 `GD-2609-003`／
+`GD-2609-004` 這種多檔案案件目錄跑完整 CLI。因此實際做法是：直接呼叫
 舊版模組裡對應的**單一解析函式**（`parse_invoice`／`parse_packing_list`／
 `parse_transport_doc`，這三個函式的簽章跟呼叫方式在新舊版之間沒有變，
 只有內部正則變了），餵入該案件對應那份 PDF 的 `pdftotext -layout` 文字，
