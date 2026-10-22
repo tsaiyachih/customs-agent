@@ -23,10 +23,13 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-DEFAULT_UPPER = os.path.expanduser("~/Downloads/112年上冊final.pdf")
-DEFAULT_LOWER = os.path.expanduser("~/Downloads/112年下冊final.pdf")
 # 相對於這支腳本自己的位置算路徑，不寫死 $HOME 或任何固定安裝路徑——
 # 這個 skill 資料夾放在哪裡都能動。
+# 稅則 PDF 放在 repo 根目錄的 data/（scripts → customs-check → skills → .claude → repo），
+# data/*.pdf 由 .gitignore 排除。
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+DEFAULT_UPPER = str(_REPO_ROOT / "data" / "112年上冊final.pdf")
+DEFAULT_LOWER = str(_REPO_ROOT / "data" / "112年下冊final.pdf")
 DEFAULT_DB = str(Path(__file__).resolve().parent.parent / "data" / "tariff.db")
 DEFAULT_CHUNK = 50
 

@@ -15,6 +15,9 @@ __pycache__/
 data/raw/
 data/output/
 
+# 稅則書原始 PDF（build_tariff_db.py 的預設輸入），55MB，公開資料可自行下載，不進版控。
+data/*.pdf
+
 # 從公開稅則書（財政部關務署）解析出來的衍生資料庫，10MB。
 # 不確定要不要把衍生資料放進 git history，保守起見先排除；
 # 需要時執行 build_tariff_db.py 即可在本機重建。
